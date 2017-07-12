@@ -6,13 +6,11 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare()
-.then(() => {
-  const server = express()
+  .then(() => {
+    const server = express()
 
-  server.get('/p/:id', (req, res) => {
-    const actualPage = '/post'
-    const queryParams = { title: req.params.id }
-    app.render(req, res, actualPage, queryParams)
+  server.get('/post', (req, res) => {
+    app.render(req, res, '/post')
   })
 
   server.get('*', (req, res) => {
