@@ -36,13 +36,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _BlogRoll = require('../components/BlogRoll');
+
+var _BlogRoll2 = _interopRequireDefault(_BlogRoll);
+
 var _isomorphicFetch = require('isomorphic-fetch');
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _jsxFileName = '/Users/Andrea/temp/blog-nextjs/client/pages/post.js?entry';
+var _jsxFileName = '/Users/Andrea/temp/blog-nextjs/client/pages/index.js?entry';
 
 
 var post = function (_React$Component) {
@@ -57,25 +61,31 @@ var post = function (_React$Component) {
   (0, _createClass3.default)(post, [{
     key: 'render',
     value: function render() {
-      console.log(this.props, 'props');
+      console.log(this.props.json, 'props');
       if (this.props.statusCode) {
         return _react2.default.createElement(Error, { statusCode: this.props.statusCode, __source: {
             fileName: _jsxFileName,
-            lineNumber: 16
+            lineNumber: 17
           }
         });
       }
       return _react2.default.createElement('div', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 19
-        }
-      }, _react2.default.createElement('p', {
-        __source: {
-          fileName: _jsxFileName,
           lineNumber: 20
         }
-      }, 'Blog Title: ', this.props.json[0].title));
+      }, this.props.json.map(function (post) {
+        return _react2.default.createElement(_BlogRoll2.default, {
+          key: post.id,
+          title: post.title,
+          slug: post.slug,
+          created_by: post.created_by,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 23
+          }
+        });
+      }));
     }
   }], [{
     key: 'getInitialProps',

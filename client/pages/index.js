@@ -1,75 +1,37 @@
-import Layout from '../components/MyLayout.js'
-import Link from 'next/link'
+import React from 'react'
+import BlogRoll from '../components/BlogRoll'
+import fetch from 'isomorphic-fetch'
 
-function getPosts () {
-  return [
-    { id: 'hello-nextjs', title: 'Hello Next.js'},
-    { id: 'learn-nextjs', title: 'Learn Next.js is awesome'},
-    { id: 'deploy-nextjs', title: 'Deploy apps with ZEIT'},
-  ]
+class post extends React.Component {
+
+  static async getInitialProps() {
+    const res = await fetch('http://localhost:8080/api/post')
+    // const statusCode = res.statusCode > 200 ? res.statusCode : false
+    const json = await res.json()
+    return { json }
+  }
+
+  render() {
+    console.log(this.props.json, 'props');
+    if(this.props.statusCode) {
+       return <Error statusCode={this.props.statusCode} />
+    }
+    return (
+      <div>
+        {this.props.json.map((post) => {
+          return(
+            <BlogRoll
+              key={post.id}
+              title={post.title}
+              slug={post.slug}
+              created_by={post.created_by}
+            />
+          );
+        })}
+      </div>
+    )
+  }
+
 }
 
-const PostLink = ({ post }) => (
-  <li>
-    <Link as={`/p/${post.id}`} href={`/post?title=${post.title}`}>
-      <a>{post.title}</a>
-    </Link>
-    <style jsx>{`
-      h1, a {
-        font-family: "Arial";
-      }
-
-      ul {
-        padding: 0;
-      }
-
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-
-      a {
-        text-decoration: none;
-        color: blue;
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </li>
-)
-
-export default () => (
-  <Layout>
-    <h1>My Blog</h1>
-    <ul>
-      {getPosts().map((post) => (
-        <PostLink key={post.id} post={post}/>
-      ))}
-    </ul>
-    <style jsx>{`
-      h1, a {
-        font-family: "Arial";
-      }
-
-      ul {
-        padding: 0;
-      }
-
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-
-      a {
-        text-decoration: none;
-        color: blue;
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </Layout>
-)
+export default post;
