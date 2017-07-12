@@ -2,7 +2,7 @@ import React from 'react'
 import BlogRoll from '../components/BlogRoll'
 import fetch from 'isomorphic-fetch'
 
-class post extends React.Component {
+class Home extends React.Component {
 
   static async getInitialProps() {
     const res = await fetch('http://localhost:8080/api/post')
@@ -34,4 +34,4 @@ class post extends React.Component {
 
 }
 
-export default post;
+export default Home;
