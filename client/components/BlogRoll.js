@@ -15,7 +15,9 @@ class BlogRoll extends React.Component {
         {this.props.title}
         {this.props.slug}
         {this.props.created_by}
-        <Link href={this.props.slug}><a>{this.props.title}</a></Link>
+        <Link as={`/post/${this.props.id}`} href={`/post?title=${this.props.slug}`}>
+          <a>{this.props.title}</a>
+        </Link>
       </div>
     )
   }
