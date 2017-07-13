@@ -1,30 +1,25 @@
-import React from 'react'
 import Layout from '../components/MyLayout.js'
 import fetch from 'isomorphic-fetch'
 
-class post extends React.Component {
 
-  // static async getInitialProps() {
-  //   const res = await fetch('http://localhost:8080/api/post')
-  //   // const statusCode = res.statusCode > 200 ? res.statusCode : false
-  //   const json = await res.json()
-  //   return { json }
-  // }
+const Post = (props) => {
+  console.log(props, 'props post page');
+  return(
+  <Layout>
+    <h1>{props.post.title}</h1>
 
-  render() {
-    console.log(this.props, 'props post');
-    if(this.props.statusCode) {
-       return <Error statusCode={this.props.statusCode} />
-    }
-    return (
-      <Layout>
-        <div>
-          <p>Blog Title: {this.props.title}</p>
-        </div>
-      </Layout>
-    )
-  }
-
+  </Layout>
+  )
 }
 
-export default post;
+Post.getInitialProps = async function (context) {
+  const { id } = context.query
+  const res = await fetch(`http://localhost:8080/api/post/${id}`)
+  const post = await res.json()
+
+  console.log(res, 'res')
+
+  return { post }
+}
+
+export default Post;
