@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const Model = require('./models/Post');
+const cors = require('cors');
+
+app.use(cors());
 
 app.get('/api/post', (req, res) => {
   new Model.Post()

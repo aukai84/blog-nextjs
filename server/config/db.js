@@ -2,8 +2,8 @@ var DBConfig = {
 	client: 'mysql',
 	connection: {
     host: 'localhost',
-    user: 'new_user',
-    password: 'new_password',
+    user: 'bloguser',
+    password: 'supra848',
     database: 'newblog',
     charset: 'utf8',
 	}
